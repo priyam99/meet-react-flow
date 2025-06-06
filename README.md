@@ -1,73 +1,150 @@
-# Welcome to your Lovable project
 
-## Project info
+# Meet Gesture Reactions Chrome Extension
 
-**URL**: https://lovable.dev/projects/387a4386-1208-40b5-90a1-f8f2e6d023f8
+A Chrome extension that enhances Google Meet with real-time hand gesture recognition and floating emoji reactions.
 
-## How can I edit this code?
+## Features
 
-There are several ways of editing your application.
+- 🤚 **Real-time Gesture Detection**: Uses MediaPipe Hands to detect thumbs up, peace sign, and wave gestures
+- 🎉 **Floating Emoji Animations**: Beautiful GSAP-powered animations with physics-based movement
+- 🎮 **Easy Toggle Control**: Integrated button in Google Meet's interface
+- 🔒 **Secure & Private**: All processing happens locally, no data sent to servers
+- 📱 **Responsive Design**: Works on all screen sizes and devices
 
-**Use Lovable**
+## Supported Gestures
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/387a4386-1208-40b5-90a1-f8f2e6d023f8) and start prompting.
+| Gesture | Emoji Reactions |
+|---------|----------------|
+| 👍 Thumbs Up | 👍 🔥 💪 ✨ |
+| ✌️ Peace Sign | ✌️ 😎 🌟 🎉 |
+| 👋 Wave | 👋 😊 💫 🌈 |
 
-Changes made via Lovable will be committed automatically to this repo.
+## Installation
 
-**Use your preferred IDE**
+1. Download the extension files
+2. Open Chrome and go to `chrome://extensions/`
+3. Enable "Developer mode" in the top right
+4. Click "Load unpacked" and select the extension folder
+5. Join a Google Meet call
+6. Look for the "Gestures" button in the Meet control bar
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+## Usage
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+1. **Enable**: Click the "Gestures" button in Google Meet
+2. **Gesture**: Show hand gestures to your camera
+3. **Enjoy**: Watch beautiful emoji reactions float across the screen!
 
-Follow these steps:
+## Technical Architecture
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+### Core Components
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+- **`contentScript.js`**: Main orchestrator that initializes all components
+- **`gestureDetector.js`**: MediaPipe Hands integration for real-time gesture recognition
+- **`emojiRenderer.js`**: GSAP-powered animation system for floating emojis
+- **`meetIntegration.js`**: Google Meet UI integration and controls
 
-# Step 3: Install the necessary dependencies.
-npm i
+### Gesture Recognition
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+The extension uses MediaPipe Hands for accurate hand landmark detection:
+
+- **21 hand landmarks** tracked in real-time
+- **Custom gesture algorithms** for recognizing specific poses
+- **Debouncing** to prevent spam reactions
+- **Multi-hand support** for advanced gestures
+
+### Animation System
+
+GSAP powers smooth, physics-based animations:
+
+- **Randomized trajectories** for natural movement
+- **Gesture-specific animations** (bounce, rotation, scaling)
+- **Performance optimized** with requestAnimationFrame
+- **Automatic cleanup** to prevent memory leaks
+
+## Expanding Gestures
+
+To add new gestures:
+
+1. **Add recognition logic** in `gestureDetector.js`:
+```javascript
+recognizeGesture(landmarks) {
+  // Add your gesture detection logic
+  if (this.isCustomGesture(landmarks)) {
+    return 'customGesture';
+  }
+}
 ```
 
-**Edit a file directly in GitHub**
+2. **Add emoji mapping** in `emojiRenderer.js`:
+```javascript
+this.emojiMap = {
+  customGesture: ['🎯', '⚡', '🚀', '💥']
+};
+```
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+3. **Add animation style** in `animateEmoji()`:
+```javascript
+case 'customGesture':
+  tl.to(element, {
+    // Custom animation properties
+  });
+  break;
+```
 
-**Use GitHub Codespaces**
+## Browser Compatibility
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+- ✅ Chrome 88+
+- ✅ Edge 88+
+- ✅ Opera 74+
+- ❌ Firefox (Manifest V3 support pending)
+- ❌ Safari (WebExtensions API limitations)
 
-## What technologies are used for this project?
+## Privacy & Security
 
-This project is built with:
+- **Local processing only**: All gesture detection happens in your browser
+- **No data collection**: Extension doesn't store or transmit personal data
+- **Minimal permissions**: Only requires access to Google Meet pages
+- **Open source**: Code is fully auditable and transparent
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## Performance
 
-## How can I deploy this project?
+- **60 FPS gesture detection** on modern hardware
+- **Optimized animations** with hardware acceleration
+- **Memory efficient** with automatic cleanup
+- **Low CPU usage** with smart frame processing
 
-Simply open [Lovable](https://lovable.dev/projects/387a4386-1208-40b5-90a1-f8f2e6d023f8) and click on Share -> Publish.
+## Troubleshooting
 
-## Can I connect a custom domain to my Lovable project?
+**Gestures not detected?**
+- Ensure good lighting and clear hand visibility
+- Check camera permissions in Chrome
+- Try different hand positions and angles
 
-Yes, you can!
+**Button not appearing?**
+- Refresh the Meet page
+- Check if extension is enabled
+- Look in different areas of the control bar
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+**Poor performance?**
+- Close other tabs and applications
+- Reduce gesture sensitivity in settings
+- Use a faster computer or better camera
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch
+3. Add your improvements
+4. Test thoroughly in Google Meet
+5. Submit a pull request
+
+## License
+
+MIT License - feel free to use and modify for your projects!
+
+## Credits
+
+- **MediaPipe** for hand tracking technology
+- **GSAP** for smooth animations
+- **Google Meet** for the awesome video platform
+- **Community** for feature requests and feedback

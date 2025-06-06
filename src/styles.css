@@ -1,0 +1,31 @@
+
+/* Extension styles */
+#gesture-emoji-container {
+  font-family: 'Segoe UI Emoji', 'Apple Color Emoji', 'Noto Color Emoji', sans-serif;
+}
+
+/* Button animations */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+.gesture-button-pulse {
+  animation: pulse 0.6s ease-in-out;
+}
+
+/* Smooth transitions for all extension elements */
+.gesture-extension * {
+  transition: all 0.2s ease;
+}
+
+/* Hide scrollbars in emoji container */
+#gesture-emoji-container::-webkit-scrollbar {
+  display: none;
+}
+
+/* Ensure high z-index for extension elements */
+.gesture-extension {
+  z-index: 10000 !important;
+}

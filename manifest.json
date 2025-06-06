@@ -1,0 +1,48 @@
+
+{
+  "manifest_version": 3,
+  "name": "Meet Gesture Reactions",
+  "version": "1.0.0",
+  "description": "Real-time hand gesture detection with floating emoji reactions for Google Meet",
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://meet.google.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://meet.google.com/*"],
+      "js": [
+        "libs/gsap.min.js",
+        "libs/mediapipe-hands.js",
+        "src/gestureDetector.js",
+        "src/emojiRenderer.js",
+        "src/meetIntegration.js",
+        "src/contentScript.js"
+      ],
+      "css": ["src/styles.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "libs/*",
+        "src/*",
+        "assets/*"
+      ],
+      "matches": ["https://meet.google.com/*"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Meet Gesture Reactions"
+  },
+  "icons": {
+    "16": "assets/icon16.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
+  }
+}
